@@ -20,17 +20,18 @@ namespace IceCream {
 		}
 
 		private PictureBox pictureBox = new PictureBox();
+
 		private Graphics canv; //Холст
-		private Random random = new Random();
-		//Все пикчи сдесь:
-		private Image coneImg = Image.FromFile(@"pic/cone.png");
-		private Image[] scoopImg = {
-			Image.FromFile(@"pic/scoop_0.png"),
-		    Image.FromFile(@"pic/scoop_1.png"),
-		    Image.FromFile(@"pic/scoop_2.png")
-		};
-		//Текущие пикчи:
-		private Image scoop;
+
+
+		private IceCreamImage iceCreamImage = new IceCreamImage(
+			cone:   Image.FromFile(@"pic/cone.png"),
+			scoops: new Image[] {
+				Image.FromFile(@"pic/scoop_0.png"),
+			    Image.FromFile(@"pic/scoop_1.png"),
+			    Image.FromFile(@"pic/scoop_2.png")
+			}
+		);
 
 
 		//Кнопки:
@@ -48,13 +49,14 @@ namespace IceCream {
 			//Инициализация холста
 			canv = e.Graphics;
 			DrawGrid();
-			DrawCone();
-			DrawScoop();
+
+			iceCreamImage.drawConeOn(canv);
+			iceCreamImage.drawScoopOn(canv);
 		}
 
 
 		private void btnRand_clik (object sender, System.EventArgs e){
-			this.scoop = this.getRandomPicture();
+			iceCreamImage.changeScoop();
 
 			Console.WriteLine("btnRand cliked!!!");
 			pictureBox.Refresh();
@@ -62,8 +64,8 @@ namespace IceCream {
 
 
 		private void Form_Load(object sender, System.EventArgs e){
-			//Init start Image:
-			this.scoop = getRandomPicture();
+			// Choose random scoop
+			iceCreamImage.changeScoop();
 			// Dock the PictureBox to the form and set its background to white.
 			this.Padding = new System.Windows.Forms.Padding(10);
 			pictureBox.Dock = DockStyle.Fill;
@@ -72,20 +74,6 @@ namespace IceCream {
 	    	pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
 			// Add the PictureBox control to the Form.
 	    	this.Controls.Add(pictureBox);
-		}
-
-		private void DrawScoop (){
-			Size scoopSz = new Size(100,scoop.Width/scoop.Height*100);
-			canv.DrawImage(scoop, new Rectangle(new Point(50,200),scoopSz));
-		}
-
-		private void DrawCone(){
-			canv.DrawImage(coneImg, new Rectangle(50,300,100,150));
-		}
-
-
-		private Image getRandomPicture() {
-			return this.scoopImg[this.random.Next(this.scoopImg.Length)];
 		}
 
 
@@ -99,6 +87,7 @@ namespace IceCream {
 	}
 
 
+
 	internal class IceCreamButton : Button {
 		public IceCreamButton(int width, int height, string text, DockStyle dock) {
 			/*
@@ -110,6 +99,39 @@ namespace IceCream {
 			this.Dock = dock;
 			this.Show();
 		}
+	}
+
+
+
+	internal class IceCreamImage {
+		public IceCreamImage(Image cone, Image[] scoops) {
+			this.cone = cone;
+			this.scoops = scoops;
+		}
+
+
+		public void changeScoop() {
+			this.scoop = this.scoops[this.rnd.Next(this.scoops.Length)];
+		}
+
+
+		public void drawConeOn(Graphics canvas) {
+			canvas.DrawImage(this.cone, new Rectangle(50, 300, 100, 150));
+		}
+
+
+		public void drawScoopOn(Graphics canvas) {
+			Image scoop = this.scoop;
+			Size scoopSize = new Size(100, scoop.Width / scoop.Height * 100);
+			canvas.DrawImage(scoop, new Rectangle(new Point(50, 200), scoopSize));
+		}
+
+
+		public Image cone;
+		public Image scoop;
+
+		protected Image[] scoops;
+		protected Random rnd = new Random();
 	}
 
 }
