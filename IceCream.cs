@@ -12,13 +12,8 @@ namespace IceCream {
 			this.Size = new System.Drawing.Size(220, 550);
 			this.Load += new EventHandler(this.Form_Load);
 
-			// Render button
-			this.showButton(this.btnRand,
-				width: 100, height: 50,
-				text: "Moar, please!",
-				dock: DockStyle.Bottom,
-				onClick: btnRand_clik
-			);
+			// Add button callbacks
+			this.btnRand.Click += new EventHandler(this.btnRand_clik);
 
 			this.Controls.Add(this.btnRand);
 			this.Show();
@@ -39,7 +34,12 @@ namespace IceCream {
 
 
 		//Кнопки:
-		private Button btnRand = new Button();
+		private Button btnRand = new IceCreamButton(
+			width:      100,
+			height:     50,
+			text:       "Moar, please!",
+			dock:       DockStyle.Bottom
+		);
 
 		// private Button btnCancel; // Will be used in future versions
 
@@ -112,4 +112,19 @@ namespace IceCream {
 		}
 
 	}
+
+
+	internal class IceCreamButton : Button {
+		public IceCreamButton(int width, int height, string text, DockStyle dock) {
+			/*
+				Get Button params, renders and returns Button object
+			*/
+
+			this.Size = new Size(width, height);
+			this.Text = text;
+			this.Dock = dock;
+			this.Show();
+		}
+	}
+
 }
