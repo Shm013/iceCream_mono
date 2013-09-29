@@ -10,6 +10,13 @@ class Programm{
 		Application.Run(new iceCream());
 	}
 }
+
+
+
+/**
+	TODO: put in new file
+*/
+
 class iceCream : Form{
 	public iceCream(){
 
@@ -17,14 +24,15 @@ class iceCream : Form{
 		this.Size= new System.Drawing.Size(220,550);
 		this.Load += new EventHandler(this.Form_Load);
 
-		this.btnRand = new Button();
-		this.btnRand.Size = new Size(100,50);
-		this.btnRand.Text = "Moar, please!";
-		this.btnRand.Dock = DockStyle.Bottom;
-		this.btnRand.Click += new EventHandler(this.btnRand_clik);
+		// Render button
+		this.showButton(this.btnRand,
+			width: 100, height: 50,
+			text: "Moar, please!",
+			dock: DockStyle.Bottom,
+			onClick: btnRand_clik
+		);
 
 		this.Controls.Add(this.btnRand);
-		this.btnRand.Show();
 		this.Show();
 	}
 
@@ -33,12 +41,20 @@ class iceCream : Form{
 	private Random random = new Random();
 	//Все пикчи сдесь:
 	private Image coneImg = Image.FromFile(@"pic/cone.png");
-	private Image[] scoopImg = {Image.FromFile(@"pic/scoop_0.png"),
-		                        Image.FromFile(@"pic/scoop_1.png"),
-							    Image.FromFile(@"pic/scoop_2.png")
+	private Image[] scoopImg = {
+		Image.FromFile(@"pic/scoop_0.png"),
+	    Image.FromFile(@"pic/scoop_1.png"),
+	    Image.FromFile(@"pic/scoop_2.png")
 	};
 	//Текущие пикчи:
 	private Image scoop;
+
+
+	//Кнопки:
+	private Button btnRand = new Button();
+
+	// private Button btnCancel; // Will be used in future versions
+
 
 	private void pictureBox1_Paint (object sender, System.Windows.Forms.PaintEventArgs e){
 		//Инициализация холста
@@ -48,15 +64,34 @@ class iceCream : Form{
 		DrawScoop();
 	}
 
-	//Кнопки:
-	private Button btnRand;
-	private Button btnCancel;
+	private void showButton(Button btn,
+				int width, int height, string text,
+				DockStyle dock, EventHandler onClick) {
+
+		/*
+			Get ref to Button object and params, renders button
+		*/
+
+		btn.Size = new Size(width, height);
+		btn.Text = text;
+		btn.Dock = dock;
+		btn.Click += new EventHandler(onClick);
+		btn.Show();
+	}
+
 
 	private void btnRand_clik (object sender, System.EventArgs e){
-		this.scoop = this.scoopImg[this.random.Next(this.scoopImg.Length)];
+		this.scoop = this.getRandomPicture();
+
 		Console.WriteLine("btnRand cliked!!!");
 		pictureBox.Refresh();
 	}
+
+
+	private Image getRandomPicture() {
+		return this.scoopImg[this.random.Next(this.scoopImg.Length)];
+	}
+
 
 	private void Form_Load(object sender, System.EventArgs e){
 		//Init start Image:
