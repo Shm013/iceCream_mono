@@ -52,21 +52,6 @@ namespace IceCream {
 			DrawScoop();
 		}
 
-		private void showButton(Button btn,
-					int width, int height, string text,
-					DockStyle dock, EventHandler onClick) {
-
-			/*
-				Get ref to Button object and params, renders button
-			*/
-
-			btn.Size = new Size(width, height);
-			btn.Text = text;
-			btn.Dock = dock;
-			btn.Click += new EventHandler(onClick);
-			btn.Show();
-		}
-
 
 		private void btnRand_clik (object sender, System.EventArgs e){
 			this.scoop = this.getRandomPicture();
