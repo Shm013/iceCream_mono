@@ -1,14 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Main.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="IceCream.cs">
     <Files>
-      <File FileName="Main.cs" Line="63" Column="63" />
-      <File FileName="../for_askar/Main.cs" Line="54" Column="4" />
+      <File FileName="Main.cs" Line="24" Column="51" />
+      <File FileName="IceCream.cs" Line="86" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True">
-          <Node name="IceCream" expanded="True" />
+        <State expanded="True">
+          <Node name="IceCream" expanded="True">
+            <Node name="pic" expanded="True" />
+            <Node name="IceCream.cs" selected="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>
