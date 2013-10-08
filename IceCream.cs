@@ -25,7 +25,7 @@ namespace IceCreamApp{ //главное окошечко
 		private PictureBox pictureBox = new PictureBox();
 		private Graphics canv; //Холст
 		private Grid grid;     //сетка
-		private IceCream iceCream = new IceCream();//мороженка
+		private IceCream iceCream = new IceCream(5);//мороженка
 		private Button btnRand = new IceCreamApp.RandomButton(//Кнопка
 		    width:      100,
 			height:     50,
